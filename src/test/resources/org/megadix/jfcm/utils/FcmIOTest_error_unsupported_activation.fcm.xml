@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jfcm:maps xmlns:jfcm="http://www.megadix.org/standards/JFCM-map-v-1.2.xsd">
+    <map name="Test Map">
+        <concepts>
+            <concept name="c1" act="BLA BLA BLA UNSUPPORTED" input="1.0" output="1.1" threshold="2.2">
+                <description>c1 description &lt;&gt;&amp;"</description>
+            </concept>
+        </concepts>
+        <connections />
+    </map>
+</jfcm:maps>

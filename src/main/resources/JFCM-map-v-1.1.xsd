@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.megadix.org/standards/JFCM-map-v-1.1.xsd" elementFormDefault="unqualified"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jfcm="http://www.megadix.org/standards/JFCM-map-v-1.1.xsd">
+
+    <xsd:complexType name="MapsType">
+        <xsd:sequence>
+            <xsd:element name="map" minOccurs="0" maxOccurs="unbounded">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+                        <xsd:element name="concepts" minOccurs="0" maxOccurs="1">
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <xsd:element name="concept" minOccurs="0" maxOccurs="unbounded">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="description" type="xsd:string" minOccurs="0"></xsd:element>
+                                            <xsd:element name="params" type="jfcm:ParamsType" minOccurs="0"></xsd:element>
+                                          </xsd:sequence>
+                                          <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+                                          <xsd:attribute name="act" use="required">
+                                            <xsd:simpleType>
+                                              <xsd:restriction base="xsd:string">
+                                                <xsd:enumeration value="SIGNUM"></xsd:enumeration>
+                                                <xsd:enumeration value="TANH"></xsd:enumeration>
+                                                <xsd:enumeration value="SIGMOID"></xsd:enumeration>
+                                              </xsd:restriction>
+                                            </xsd:simpleType>
+                                          </xsd:attribute>
+                                          <xsd:attribute name="input" type="xsd:double" use="optional"></xsd:attribute>
+                                          <xsd:attribute name="output" type="xsd:double" use="optional"></xsd:attribute>
+                                          <xsd:attribute name="fixed" type="xsd:boolean" use="optional"></xsd:attribute>
+                                        </xsd:complexType>
+                                    </xsd:element>
+                                </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
+                        <xsd:element name="connections" minOccurs="0" maxOccurs="1">
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <xsd:element name="connection" minOccurs="0" maxOccurs="unbounded">
+                                        <xsd:complexType>
+                                            <xsd:sequence>
+                                              <xsd:element name="description" type="xsd:string" minOccurs="0"></xsd:element>
+                                              <xsd:element name="params" type="jfcm:ParamsType" minOccurs="0"></xsd:element>
+                                            </xsd:sequence>
+                                            <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+                                            <xsd:attribute name="from" type="xsd:string" use="required"></xsd:attribute>
+                                            <xsd:attribute name="to" type="xsd:string" use="required"></xsd:attribute>
+                                            <xsd:attribute name="type" use="required">
+                                                <xsd:simpleType>
+                                                    <xsd:restriction base="xsd:string">
+                                                        <xsd:enumeration value="WEIGHTED"></xsd:enumeration>
+                                                        <xsd:enumeration value="FUZZY"></xsd:enumeration>
+                                                    </xsd:restriction>
+                                                </xsd:simpleType>
+                                            </xsd:attribute>
+                                        </xsd:complexType>
+                                    </xsd:element>
+                                </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </xsd:sequence>
+                    <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="maps" type="jfcm:MapsType"></xsd:element>
+
+
+
+    
+    <xsd:complexType name="ParamsType">
+      <xsd:sequence>
+        <xsd:element name="param" minOccurs="0" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+            <xsd:attribute name="value" type="xsd:string" use="required"></xsd:attribute>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

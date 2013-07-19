@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jfcm:maps xmlns:jfcm="http://www.megadix.org/standards/JFCM-map-v-1.2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.megadix.org/standards/JFCM-map-v-1.2.xsd http://www.megadix.org/standards/JFCM-map-v-1.2.xsd">
+  <map name="Test Map">
+    <description>This is a test map</description>
+    <concepts>
+      <concept name="c1" act="CAUCHY">
+        <params>
+          <param name="threshold" value="1.1" />
+        </params>
+      </concept>
+      <concept name="c2" act="GAUSS">
+        <params>
+          <param name="threshold" value="1.2" />
+          <param name="includePreviousOutput" value="false" />
+          <param name="width" value="2.0" />
+        </params>
+      </concept>
+      <concept name="c3" act="INTERVAL">
+        <params>
+          <param name="threshold" value="1.3" />
+          <param name="mode" value="BINARY" />
+          <param name="zeroValue" value="-0.5" />
+          <param name="amplitude" value="2.0" />
+        </params>
+      </concept>
+      <concept name="c4" act="LINEAR">
+        <params>
+          <param name="threshold" value="1.4" />
+          <param name="includePreviousOutput" value="false" />
+          <param name="factor" value="2.0" />
+          <param name="min" value="0.1" />
+          <param name="max" value="0.2" />
+        </params>
+      </concept>
+      <concept name="c5" act="NARY">
+        <params>
+          <param name="threshold" value="1.5" />
+          <param name="n" value="3" />
+        </params>
+      </concept>
+      <concept name="c6" act="SIGMOID">
+        <params>
+          <param name="threshold" value="1.6" />
+          <param name="includePreviousOutput" value="false" />
+          <param name="k" value="1.1" />
+        </params>
+      </concept>
+      <concept name="c7" act="SIGNUM">
+        <params>
+          <param name="threshold" value="1.7" />
+          <param name="mode" value="BINARY" />
+          <param name="zeroValue" value="0.1" />
+        </params>
+      </concept>
+      <concept name="c8" act="TANH">
+        <params>
+          <param name="threshold" value="1.8" />
+          <param name="includePreviousOutput" value="false" />
+        </params>
+      </concept>
+    </concepts>
+    <connections />
+  </map>
+</jfcm:maps>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jfcm:maps xmlns:jfcm="http://www.megadix.org/standards/JFCM-map-v-1.2.xsd">
+    <map name="Test Map">
+        <concepts>
+            <concept name="c1" act="SIGNUM" input="1.0" output="1.1" threshold="2.2">
+                <description>c1 description &lt;&gt;&amp;"</description>
+                <params>
+                  <param name="threshold" value="1.1" />
+                </params>
+            </concept>
+            <concept name="c2" act="SIGMOID" output="3.3" threshold="4.4">
+                <description>c2 description</description>
+                <params>
+                  <param name="k" value="2.2" />
+                </params>
+            </concept>
+        </concepts>
+        <connections>
+            <connection name="c1-c2" from="c1" to="c2" type="BLA BLA BLA UNSUPPORTED">
+                <description>c1-c2 description <![CDATA[<>&"]]></description>
+                <param name="weight" value="1.1" />
+            </connection>
+        </connections>
+    </map>
+</jfcm:maps>
