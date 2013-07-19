@@ -23,9 +23,10 @@ http://www.megadix.it/
 
 h2. CHANGELOG
 
-h3. Release in progress: 1.4-SNAPSHOT
+h3. Release 1.4.2
 
-* ...
+* fixed XSD:
+** moved CAUCHY, GAUSS, INTERVAL, LINEAR, NARY activator enum to JFCM-map-v-1.2.xsd
 
 h3. Release 1.4.1
 
