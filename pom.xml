@@ -100,11 +100,7 @@
   </licenses>
 
   <scm>
-    <connection>scm:svn:https://jfcm.svn.sourceforge.net/svnroot/jfcm/tags/1.4.1</connection>
-    <developerConnection>
-            scm:svn:https://jfcm.svn.sourceforge.net/svnroot/jfcm/tags/1.4.1
-        </developerConnection>
-    <url>http://jfcm.svn.sourceforge.net/viewvc/jfcm/tags/1.4.1</url>
+    <developerConnection>scm:git:ssh:github.com:megadix/jfcm.git</developerConnection>
   </scm>
 
   <developers>
