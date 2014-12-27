@@ -22,8 +22,27 @@ import org.megadix.jfcm.CognitiveMap;
 
 public interface FcmRunner {
 
+    /**
+     * Set the map to run,
+     * @param map
+     */
     void setMap(CognitiveMap map);
 
+    /**
+     * Set the number of epochs to run before stopping.
+     * @param maxEpochs
+     */
+    public void setMaxEpochs(int maxEpochs);
+
+    /**
+     * Try to repeatedly execute the map until convergence. Each implementation
+     * must provide its own convergence test.
+     * @return
+     */
     boolean converge();
 
+    /**
+     * Repeatedly execute the map, without trying to converge.
+     */
+    void run();
 }

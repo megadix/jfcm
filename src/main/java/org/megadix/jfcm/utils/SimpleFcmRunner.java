@@ -19,50 +19,220 @@ Temple Place, Suite 330, Boston, MA 02111-1307 USA
 package org.megadix.jfcm.utils;
 
 import org.megadix.jfcm.CognitiveMap;
+import org.megadix.jfcm.Concept;
 
-public class SimpleFcmRunner implements FcmRunner {
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-    private CognitiveMap map;
+/**
+ * Simple implementation of {@link org.megadix.jfcm.utils.FcmRunner} that permits iterative
+ * execution of the map, CSV output and a simple convergence-detection mechanism.
+ */
+public class SimpleFcmRunner extends BaseFcmRunner {
+
     private double maxDelta;
-    private int maxEpochs;
+
+    // CSV output stuff
+    private String csvOutputFileName;
+    private Charset csvOutputCharset = Charset.forName("UTF-8");
+    private File csvOutputFile;
+    private OutputStream csvOutputStream;
+    private BufferedWriter csvWriter;
 
     public SimpleFcmRunner() {
     }
 
+    public SimpleFcmRunner(CognitiveMap map, int maxEpochs) {
+        super(map, maxEpochs);
+    }
+
     public SimpleFcmRunner(double maxDelta, int maxEpochs) {
-        super();
+        super(maxEpochs);
         this.maxDelta = maxDelta;
-        this.maxEpochs = maxEpochs;
     }
 
     public SimpleFcmRunner(CognitiveMap map, double maxDelta, int maxEpochs) {
-        super();
-        this.map = map;
+        super(map, maxEpochs);
         this.maxDelta = maxDelta;
-        this.maxEpochs = maxEpochs;
     }
 
-    public void setMap(CognitiveMap map) {
-        this.map = map;
-    }
-
+    /**
+     * When {@link org.megadix.jfcm.CognitiveMap#getAverageSquareDelta()} > maxDelta, computation stops.
+     *
+     * @param maxDelta
+     */
     public void setMaxDelta(double maxDelta) {
         this.maxDelta = maxDelta;
     }
 
-    public void setMaxEpochs(int maxEpochs) {
-        this.maxEpochs = maxEpochs;
+    /**
+     * File to output CSV values to, default charset (UTF-8)
+     *
+     * @param csvOutputFile
+     */
+    public void setCsvOutputFile(String csvOutputFile) {
+        this.csvOutputFileName = csvOutputFile;
+        this.csvOutputCharset = Charset.forName("UTF-8");
+    }
+
+    /**
+     * File to output CSV values to.
+     *
+     * @param csvOutputFile
+     * @param charset       name of the charset to use
+     */
+    public void setCsvOutputFile(String csvOutputFile, String charset) {
+        this.csvOutputFileName = csvOutputFile;
+        this.csvOutputCharset = Charset.forName(charset);
     }
 
     public boolean converge() {
-        Double delta = map.calculateAverageSquareDelta();
-        int i = 0;
-        while ((delta == null || Double.isNaN(delta) || Double.isInfinite(delta) || delta > maxDelta) && i < maxEpochs) {
-            map.execute();
+        if (map == null) {
+            throw new IllegalStateException("map == null");
+        }
+
+        Double delta;
+
+        try {
+            beforeRun();
+
             delta = map.calculateAverageSquareDelta();
-            i++;
+            int i = 0;
+            while ((delta == null || Double.isNaN(delta) || Double.isInfinite(delta) || delta > maxDelta) && i < maxEpochs) {
+                map.execute();
+                delta = map.calculateAverageSquareDelta();
+                writeOutputs(i + 1);
+                i++;
+            }
+
+            afterRun();
+
+        } catch (Exception ex) {
+            throw new RuntimeException("Error running map", ex);
         }
 
         return (delta != null && delta.doubleValue() <= maxDelta);
+    }
+
+    public void run() {
+        if (map == null) {
+            throw new IllegalStateException("map == null");
+        }
+
+        try {
+            beforeRun();
+
+            // main loop
+            for (int i = 0; i < maxEpochs; i++) {
+                map.execute();
+                writeOutputs(i + 1);
+            }
+
+            afterRun();
+
+        } catch (Exception ex) {
+            throw new RuntimeException("Error running map", ex);
+        }
+    }
+
+    protected void beforeRun() throws IOException {
+        // write headers
+        writeHeaders();
+        // write initial map state
+        writeOutputs(0);
+    }
+
+    protected void afterRun() throws IOException {
+        // close file
+        closeCsvFile();
+    }
+
+    /**
+     * Create csvOutputFile
+     *
+     * @return <code>true</code> if new file, <code>false otherwise</code>
+     * @throws IOException
+     */
+    private boolean openOutputFile() throws IOException {
+        boolean created = false;
+        Path path = Paths.get(csvOutputFileName);
+        csvOutputFile = path.toFile();
+
+        if (csvOutputFile.exists()) {
+            if (csvOutputFile.isDirectory()) {
+                throw new IllegalArgumentException("CSV output \"" + path.toAbsolutePath() + "\" is a directory");
+            } else if (!csvOutputFile.canWrite()) {
+                throw new IllegalArgumentException("Cannot write to CSV output file: \"" + path.toAbsolutePath());
+            }
+            // delete old file
+            if (!csvOutputFile.delete()) {
+                throw new IOException("Cannot delete file: " + path.toAbsolutePath());
+            }
+            // re-create file
+            created = csvOutputFile.createNewFile();
+            if (!created) {
+                throw new IOException("Cannot create file: " + path.toAbsolutePath());
+            }
+
+        } else {
+            // create parent directory if necessary
+            if (!csvOutputFile.getParentFile().exists()) {
+                csvOutputFile.getParentFile().mkdirs();
+            }
+            // create file
+            created = csvOutputFile.createNewFile();
+            if (!created) {
+                throw new IOException("Cannot create file: " + path.toAbsolutePath());
+            }
+        }
+
+        csvOutputStream = new BufferedOutputStream(new FileOutputStream(csvOutputFile));
+        csvWriter = new BufferedWriter(new OutputStreamWriter(csvOutputStream, csvOutputCharset));
+
+        return created;
+    }
+
+    private void closeCsvFile() throws IOException {
+        if (csvOutputFile == null) {
+            return;
+        }
+        csvWriter.close();
+        csvOutputStream.close();
+    }
+
+    private void writeHeaders() throws IOException {
+        if (csvOutputFileName == null) {
+            return;
+        }
+
+        boolean newFile = openOutputFile();
+        if (newFile) {
+            csvWriter.write("\"iteration\"");
+
+            for (Concept c : map.getConcepts().values()) {
+                csvWriter.write(",");
+                String name = c.getName().replaceAll("\"", "\"\"");
+                csvWriter.write("\"" + name + "\"");
+            }
+            csvWriter.write("\n");
+        }
+    }
+
+    private void writeOutputs(int iteration) throws IOException {
+        if (csvOutputFile == null) {
+            return;
+        }
+
+        csvWriter.write(Integer.toString(iteration));
+
+        for (Concept c : map.getConcepts().values()) {
+            csvWriter.write(",");
+            if (c.getOutput() != null && !c.getOutput().isNaN() && !c.getOutput().isInfinite()) {
+                csvWriter.write(c.getOutput().toString());
+            }
+        }
+        csvWriter.write("\n");
     }
 }

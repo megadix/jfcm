@@ -609,11 +609,4 @@ abstract class BaseConceptActivatorBuilder {
         return act;
     }
 
-    Object getParam(Map<String, String> params, String name, Object defaultValue) {
-        if (params.containsKey(name)) {
-            return params.get(name);
-        } else {
-            return defaultValue;
-        }
-    }
 }

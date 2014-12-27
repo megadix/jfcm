@@ -4,7 +4,7 @@
   <groupId>org.megadix.jfcm</groupId>
   <artifactId>jfcm-core</artifactId>
   <packaging>jar</packaging>
-  <version>1.4.2-SNAPSHOT</version>
+  <version>1.4.2</version>
   <name>JFCM-core</name>
   <url>http://jfcm.megadix.it/</url>
   <description>Java implementation of Fuzzy Conceptual Maps (FCM) by Dimitri De Franciscis</description>

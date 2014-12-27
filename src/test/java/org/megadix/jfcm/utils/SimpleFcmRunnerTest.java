@@ -18,6 +18,7 @@ Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 package org.megadix.jfcm.utils;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -26,7 +27,9 @@ import org.megadix.jfcm.*;
 import org.megadix.jfcm.act.SignumActivator;
 import org.megadix.jfcm.conn.WeightedConnection;
 
-public class FcmRunnerTest {
+import java.io.File;
+
+public class SimpleFcmRunnerTest {
 
     public static CognitiveMap buildTestMap_1() {
 
@@ -71,12 +74,57 @@ public class FcmRunnerTest {
     }
 
     @Test
-    public void test_converge() {
+    public void test_converge_without_file() {
         CognitiveMap map = buildTestMap_1();
         FcmRunner runner = new SimpleFcmRunner(map, 0.1, 1000);
         runner.converge();
 
         assertTrue(map.calculateAverageSquareDelta() <= 0.1);
+    }
+
+    @Test
+    public void test_converge_with_file() {
+        String csvFilename = "target/test/SimpleFcmRunnerTest_test_converge_with_file.csv";
+        CognitiveMap map = buildTestMap_1();
+        map.getConcept("c1").setName("c1\"'");
+
+        SimpleFcmRunner runner = new SimpleFcmRunner(map, 0.0000001, 10);
+        runner.setCsvOutputFile(csvFilename);
+
+        File file = new File(csvFilename);
+        if(file.exists()) {
+            assertTrue(file.delete());
+        }
+
+        runner.converge();
+
+        assertTrue(file.exists());
+    }
+
+    @Test
+    public void test_run_with_file() {
+        String csvFilename = "target/test/SimpleFcmRunnerTest_test_run_with_file.csv";
+        CognitiveMap map = buildTestMap_1();
+        map.getConcept("c1").setName("c1\"'");
+
+        SimpleFcmRunner runner = new SimpleFcmRunner(map, 10);
+        runner.setCsvOutputFile(csvFilename);
+
+        File file = new File(csvFilename);
+        if(file.exists()) {
+            assertTrue(file.delete());
+        }
+
+        runner.run();
+
+        assertTrue(file.exists());
+    }
+
+    @Test
+    public void test_run_without_file() {
+        CognitiveMap map = buildTestMap_1();
+        SimpleFcmRunner runner = new SimpleFcmRunner(map, 10);
+        runner.run();
     }
 
 }
