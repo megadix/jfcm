@@ -21,6 +21,11 @@ http://www.megadix.it/
 
 ## CHANGELOG
 
+### Release 1.4.3
+
+* moved JDK compatibility to 1.7
+* cosmetic fixes to source code, no functionality affected
+
 ### Release 1.4.2
 
 * fixed XSD:
