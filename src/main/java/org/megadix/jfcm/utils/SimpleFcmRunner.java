@@ -59,9 +59,9 @@ public class SimpleFcmRunner extends BaseFcmRunner {
     }
 
     /**
-     * When {@link org.megadix.jfcm.CognitiveMap#getAverageSquareDelta()} > maxDelta, computation stops.
+     * When {@link org.megadix.jfcm.CognitiveMap#getAverageSquareDelta()} &gt; maxDelta, computation stops.
      *
-     * @param maxDelta
+     * @param maxDelta max average square delta
      */
     public void setMaxDelta(double maxDelta) {
         this.maxDelta = maxDelta;
@@ -70,7 +70,7 @@ public class SimpleFcmRunner extends BaseFcmRunner {
     /**
      * File to output CSV values to, default charset (UTF-8)
      *
-     * @param csvOutputFile
+     * @param csvOutputFile path of csv output file
      */
     public void setCsvOutputFile(String csvOutputFile) {
         this.csvOutputFileName = csvOutputFile;
@@ -80,7 +80,7 @@ public class SimpleFcmRunner extends BaseFcmRunner {
     /**
      * File to output CSV values to.
      *
-     * @param csvOutputFile
+     * @param csvOutputFile path of csv output file
      * @param charset       name of the charset to use
      */
     public void setCsvOutputFile(String csvOutputFile, String charset) {
@@ -113,7 +113,7 @@ public class SimpleFcmRunner extends BaseFcmRunner {
             throw new RuntimeException("Error running map", ex);
         }
 
-        return (delta != null && delta.doubleValue() <= maxDelta);
+        return (delta != null && delta <= maxDelta);
     }
 
     public void run() {

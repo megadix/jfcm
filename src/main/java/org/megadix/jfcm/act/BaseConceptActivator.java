@@ -68,7 +68,7 @@ public abstract class BaseConceptActivator implements ConceptActivator {
      * If set to <code>true</code> calculations should include previous output value,
      * if <code>false</code> just input values, default is <code>true</code>.
      *
-     * @param includePreviousOutput
+     * @param includePreviousOutput include previous output in calculation
      */
     public final void setIncludePreviousOutput(boolean includePreviousOutput) {
         this.includePreviousOutput = includePreviousOutput;

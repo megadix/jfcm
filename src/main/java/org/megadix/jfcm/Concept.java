@@ -38,8 +38,8 @@ public class Concept {
     protected boolean fixedOutput = false;
 
     protected CognitiveMap map;
-    protected Set<FcmConnection> outConnections = new HashSet<FcmConnection>();
-    protected Set<FcmConnection> inConnections = new HashSet<FcmConnection>();
+    protected Set<FcmConnection> outConnections = new HashSet<>();
+    protected Set<FcmConnection> inConnections = new HashSet<>();
 
     public Concept() {
     }
@@ -89,7 +89,7 @@ public class Concept {
     /**
      * Shallow copy constructor, without copying {@link #getMap()},
      * {@link #getOutConnections()}, {@link #getInConnections()}
-     * @param c
+     * @param c concept to copy properties from
      */
     public Concept(Concept c) {
         this.name = c.name;
@@ -122,7 +122,7 @@ public class Concept {
     }
 
     /**
-     * Phase 1 of update: calculate {@link #nextOuput} invoking {@link ConceptActivator#calculateNextOutput(Concept)}
+     * Phase 1 of update: calculate {@link #nextOutput} invoking {@link ConceptActivator#calculateNextOutput(Concept)}
      */
     public void startUpdate() {
         if (conceptActivator == null) {
@@ -134,7 +134,7 @@ public class Concept {
     }
 
     /**
-     * Phase 2 of update: copy {@link #nextOuput} to {@link #output}
+     * Phase 2 of update: copy {@link #nextOutput} to {@link #output}
      */
     public void commitUpdate() {
         output = nextOutput;

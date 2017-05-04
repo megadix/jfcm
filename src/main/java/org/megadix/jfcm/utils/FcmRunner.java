@@ -24,20 +24,20 @@ public interface FcmRunner {
 
     /**
      * Set the map to run,
-     * @param map
+     * @param map map to run
      */
     void setMap(CognitiveMap map);
 
     /**
      * Set the number of epochs to run before stopping.
-     * @param maxEpochs
+     * @param maxEpochs max. number of epochs
      */
-    public void setMaxEpochs(int maxEpochs);
+    void setMaxEpochs(int maxEpochs);
 
     /**
      * Try to repeatedly execute the map until convergence. Each implementation
      * must provide its own convergence test.
-     * @return
+     * @return <code>true</code> if the map converged, <code>false</code> otherwise
      */
     boolean converge();
 

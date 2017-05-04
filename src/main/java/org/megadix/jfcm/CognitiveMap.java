@@ -32,8 +32,8 @@ public class CognitiveMap implements Cloneable {
 
     private String name;
     private String description;
-    private Map<String, Concept> concepts = new TreeMap<String, Concept>();
-    private Map<String, FcmConnection> connections = new TreeMap<String, FcmConnection>();
+    private Map<String, Concept> concepts = new TreeMap<>();
+    private Map<String, FcmConnection> connections = new TreeMap<>();
     private Double averageSquareDelta = null;
 
     public CognitiveMap() {
@@ -259,7 +259,7 @@ public class CognitiveMap implements Cloneable {
      * Calculate average square of previous vs current output of {@link Concept Concepts}
      * and stores it in {@link #getAverageSquareDelta()}
      *
-     * @return
+     * @return average square variation of output
      */
     public Double calculateAverageSquareDelta() {
         double delta = 0.0;
@@ -347,6 +347,8 @@ public class CognitiveMap implements Cloneable {
 
     /**
      * Average square variation of Concept output, calculated by {@link #calculateAverageSquareDelta()}
+     *
+     * @return average square variation
      */
     public Double getAverageSquareDelta() {
         return averageSquareDelta;

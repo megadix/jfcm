@@ -25,7 +25,7 @@ import org.megadix.jfcm.FcmConnection;
 
 /**
  * Simple {@link FcmConnection} implementation that applies a weight and a threshold
- * to the input {@link Concept}. Final output is calculated as follows:
+ * to the input {@link org.megadix.jfcm.Concept}. Final output is calculated as follows:
  * <pre>
  * result = (from.getOutput() - from.getOutputThreshold()) * weight
  * </pre>
@@ -47,7 +47,7 @@ public class WeightedConnection extends FcmConnection {
         this.weight = weight;
         this.delay = delay;
         if (delay > 0) {
-            buffer = new LinkedList<Double>();
+            buffer = new LinkedList<>();
         }
     }
 
@@ -104,7 +104,7 @@ public class WeightedConnection extends FcmConnection {
     public void setDelay(int delay) {
         this.delay = delay;
         if (delay > 0) {
-            buffer = new LinkedList<Double>();
+            buffer = new LinkedList<>();
         } else {
             buffer = null;
         }

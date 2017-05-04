@@ -25,28 +25,28 @@ public interface Visitor {
 
     /**
      * Visit a {@link CognitiveMap}
-     * @param map
+     * @param map cognitive map to visit
      * @return <code>true</code> if visit must continue, <code>false</code> otherwise
      */
     boolean visitCognitiveMap(CognitiveMap map);
 
     /**
      * Visit a {@link Concept}
-     * @param concept
+     * @param concept concept to visit
      * @return <code>true</code> if visit must continue, <code>false</code> otherwise
      */
     boolean visitConcept(Concept concept);
 
     /**
      * Visit a {@link FcmConnection}
-     * @param conn
+     * @param conn connection to visit
      * @return <code>true</code> if visit must continue, <code>false</code> otherwise
      */
     boolean visitConnection(FcmConnection conn);
 
     /**
      * Visit a {@link ConceptActivator}
-     * @param activator
+     * @param activator concept activator to visit
      * @return <code>true</code> if visit must continue, <code>false</code> otherwise
      */
     boolean visitConceptActivator(ConceptActivator activator);

@@ -46,7 +46,7 @@ public class FcmIO {
     private static final Map<String, BaseConceptActivatorBuilder> actBuilders;
 
     static {
-        actBuilders = new HashMap<String, BaseConceptActivatorBuilder>();
+        actBuilders = new HashMap<>();
 
         BaseConceptActivatorBuilder actBuilder;
 
@@ -174,7 +174,7 @@ public class FcmIO {
     }
 
     public static void saveAsXml(CognitiveMap map, OutputStream outputStream) {
-        List<CognitiveMap> maps = new ArrayList<CognitiveMap>(1);
+        List<CognitiveMap> maps = new ArrayList<>(1);
         maps.add(map);
         saveAsXml(maps, outputStream);
     }
@@ -212,7 +212,7 @@ public class FcmIO {
             DocumentBuilder documentBuilder = getDocumentBuilder(true);
             Document doc = documentBuilder.parse(new InputSource(reader));
             XPath xpath = XPathFactory.newInstance().newXPath();
-            List<CognitiveMap> maps = new ArrayList<CognitiveMap>();
+            List<CognitiveMap> maps = new ArrayList<>();
             NodeList nodelist = (NodeList) xpath.evaluate("/maps/map", doc, XPathConstants.NODESET);
             for (int i = 0; i < nodelist.getLength(); i++) {
                 Element mapElem = (Element) nodelist.item(i);
@@ -248,190 +248,6 @@ public class FcmIO {
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 
         return documentBuilder;
-    }
-
-    private static void appendMap(CognitiveMap map, Document doc, Element mapsElem) {
-        Element mapElem = doc.createElement("map");
-        mapElem.setAttribute("name", map.getName());
-        appendDescription(doc, mapElem, map.getDescription());
-        mapsElem.appendChild(mapElem);
-
-        appendConcepts(map, doc, mapElem);
-        appendConnections(map, doc, mapElem);
-    }
-
-    private static void appendConcepts(CognitiveMap map, Document doc, Element elem) {
-        Element elemConcepts = doc.createElement("concepts");
-        elem.appendChild(elemConcepts);
-
-        Iterator<Concept> cIter = map.getConceptsIterator();
-        while (cIter.hasNext()) {
-            Concept c = cIter.next();
-            if (c.getConceptActivator() == null) {
-                throw new IllegalStateException("conceptActivator == null, Concept = " + c.getName());
-            }
-
-            Element elemConcept = doc.createElement("concept");
-            elemConcept.setAttribute("name", c.getName());
-            appendDescription(doc, elemConcept, c.getDescription());
-
-            Element paramsElem = doc.createElement("params");
-            elemConcept.appendChild(paramsElem);
-
-            if (c.getInput() != null) {
-                elemConcept.setAttribute("input", c.getInput().toString());
-            }
-            if (c.getOutput() != null) {
-                elemConcept.setAttribute("output", c.getOutput().toString());
-            }
-            if (c.isFixedOutput()) {
-                elemConcept.setAttribute("fixed", "true");
-            }
-
-            if (c.getConceptActivator() != null) {
-
-                // append params for ConceptActivator
-
-                if (BaseConceptActivator.class.isAssignableFrom(c.getConceptActivator().getClass())) {
-                    BaseConceptActivator act = (BaseConceptActivator) c.getConceptActivator();
-                    if (act.getThreshold() != BaseConceptActivator.DEFAULT_THRESHOLD) {
-                        addXmlParam(paramsElem, "threshold", Double.toString(act.getThreshold()));
-                    }
-                    if (act.isIncludePreviousOutput() != BaseConceptActivator.DEFAULT_INCLUDE_PREVIOUS_OUTPUT) {
-                        addXmlParam(paramsElem, "includePreviousOutput",
-                                Boolean.toString(act.isIncludePreviousOutput()));
-                    }
-                }
-
-                if (c.getConceptActivator() instanceof CauchyActivator) {
-                    elemConcept.setAttribute("act", Constants.ConceptActivatorTypes.CAUCHY.name());
-
-                } else if (c.getConceptActivator() instanceof GaussianActivator) {
-                    elemConcept.setAttribute("act", Constants.ConceptActivatorTypes.GAUSS.name());
-                    GaussianActivator actImpl = (GaussianActivator) c.getConceptActivator();
-                    if (actImpl.getWidth() != GaussianActivator.DEFAULT_WIDTH) {
-                        addXmlParam(paramsElem, "width", Double.toString(actImpl.getWidth()));
-                    }
-
-                } else if (c.getConceptActivator() instanceof IntervalActivator) {
-                    elemConcept.setAttribute("act", Constants.ConceptActivatorTypes.INTERVAL.name());
-                    IntervalActivator actImpl = (IntervalActivator) c.getConceptActivator();
-                    if (actImpl.getMode() != IntervalActivator.DEFAULT_MODE) {
-                        addXmlParam(paramsElem, "mode", actImpl.getMode().name());
-                    }
-                    if (actImpl.getZeroValue() != IntervalActivator.DEFAULT_ZERO_VALUE) {
-                        addXmlParam(paramsElem, "zeroValue", Double.toString(actImpl.getZeroValue()));
-                    }
-                    if (actImpl.getAmplitude() != IntervalActivator.DEFAULT_AMPLITUDE) {
-                        addXmlParam(paramsElem, "amplitude", Double.toString(actImpl.getAmplitude()));
-                    }
-
-                } else if (c.getConceptActivator() instanceof LinearActivator) {
-                    elemConcept.setAttribute("act", Constants.ConceptActivatorTypes.LINEAR.name());
-                    LinearActivator actImpl = (LinearActivator) c.getConceptActivator();
-
-                    if (actImpl.getFactor() != LinearActivator.DEFAULT_FACTOR) {
-                        addXmlParam(paramsElem, "factor", Double.toString(actImpl.getFactor()));
-                    }
-                    if (actImpl.getMin() != LinearActivator.DEFAULT_MIN) {
-                        addXmlParam(paramsElem, "min", Double.toString(actImpl.getMin()));
-                    }
-                    if (actImpl.getMax() != LinearActivator.DEFAULT_MAX) {
-                        addXmlParam(paramsElem, "max", Double.toString(actImpl.getMax()));
-                    }
-
-                } else if (c.getConceptActivator() instanceof NaryActivator) {
-                    elemConcept.setAttribute("act", Constants.ConceptActivatorTypes.NARY.name());
-                    NaryActivator actImpl = (NaryActivator) c.getConceptActivator();
-                    if (actImpl.getN() != NaryActivator.DEFAULT_N) {
-                        addXmlParam(paramsElem, "n", Integer.toString(actImpl.getN()));
-                    }
-
-                } else if (c.getConceptActivator() instanceof SigmoidActivator) {
-                    elemConcept.setAttribute("act", Constants.ConceptActivatorTypes.SIGMOID.name());
-                    SigmoidActivator actImpl = (SigmoidActivator) c.getConceptActivator();
-                    if (actImpl.getK() != SigmoidActivator.DEFAULT_K) {
-                        addXmlParam(paramsElem, "k", Double.toString(actImpl.getK()));
-                    }
-
-                } else if (c.getConceptActivator() instanceof SignumActivator) {
-                    elemConcept.setAttribute("act", Constants.ConceptActivatorTypes.SIGNUM.name());
-                    SignumActivator actImpl = (SignumActivator) c.getConceptActivator();
-                    if (actImpl.getMode() != SignumActivator.DEFAULT_MODE) {
-                        addXmlParam(paramsElem, "mode", actImpl.getMode().name());
-                    }
-                    if (actImpl.getZeroValue() != SignumActivator.DEFAULT_ZERO_VALUE) {
-                        addXmlParam(paramsElem, "zeroValue", Double.toString(actImpl.getZeroValue()));
-                    }
-
-                } else if (c.getConceptActivator() instanceof HyperbolicTangentActivator) {
-                    elemConcept.setAttribute("act", Constants.ConceptActivatorTypes.TANH.name());
-
-                } else {
-                    throw new IllegalArgumentException("Unsupported ConceptActivator: "
-                            + c.getConceptActivator().getClass().getName());
-                }
-
-            } // c.getConceptActivator() != null
-
-            elemConcepts.appendChild(elemConcept);
-        }
-    }
-
-    private static void appendDescription(Document doc, Element element, String description) {
-        if (StringUtils.isNotBlank(description)) {
-            return;
-        }
-        Element elemDescription = doc.createElement("description");
-        elemDescription.setTextContent(description);
-        element.appendChild(elemDescription);
-    }
-
-    private static void addXmlParam(Element paramsElem, String name, String value) {
-        Element paramElem = paramsElem.getOwnerDocument().createElement("param");
-        paramElem.setAttribute("name", name);
-        paramElem.setAttribute("value", value);
-        paramsElem.appendChild(paramElem);
-    }
-
-    private static void appendConnections(CognitiveMap map, Document doc, Element elem) {
-        Element elemConnections = doc.createElement("connections");
-        elem.appendChild(elemConnections);
-
-        Iterator<FcmConnection> connIter = map.getConnectionsIterator();
-        while (connIter.hasNext()) {
-            FcmConnection conn = connIter.next();
-            Element elemConn = doc.createElement("connection");
-            elemConn.setAttribute("name", conn.getName());
-
-            appendDescription(doc, elemConn, conn.getDescription());
-
-            if (conn.getFrom() != null) {
-                elemConn.setAttribute("from", conn.getFrom().getName());
-            }
-            if (conn.getTo() != null) {
-                elemConn.setAttribute("to", conn.getTo().getName());
-            }
-            if (conn instanceof WeightedConnection) {
-                elemConn.setAttribute("type", "WEIGHTED");
-
-                WeightedConnection wc = (WeightedConnection) conn;
-
-                Element paramsElem = doc.createElement("params");
-                elemConn.appendChild(paramsElem);
-
-                addXmlParam(paramsElem, "weight", Double.toString(wc.getWeight()));
-                if (wc.getDelay() != 0) {
-                    addXmlParam(paramsElem, "delay", Integer.toString(wc.getDelay()));
-                }
-
-            } else {
-                throw new UnsupportedOperationException("FcmConnection implementation not supported: "
-                        + conn.getClass().getName());
-            }
-
-            elemConnections.appendChild(elemConn);
-        }
     }
 
     private static CognitiveMap parseMap(XPath xpath, Element mapElem) throws Exception {
@@ -510,7 +326,7 @@ public class FcmIO {
     }
 
     private static Map<String, String> parseParams(Element elem, XPath xpath) throws XPathExpressionException {
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         Element paramsElem = (Element) xpath.evaluate("params", elem, XPathConstants.NODE);
         if (paramsElem != null) {
             NodeList paramsList = (NodeList) xpath.evaluate("param", paramsElem, XPathConstants.NODESET);

@@ -55,14 +55,14 @@ public abstract class FcmConnection {
      * {@link #output} property. Clients interested only in current output
      * should call {@link #getOutput()} instead.
      *
-     * @return
+     * @return new output
      */
     public abstract Double calculateOutput();
 
     /**
      * Returns the current calculated output, set by {@link #calculateOutput()}
      *
-     * @return
+     * @return current output
      */
     public Double getOutput() {
         return this.output;
