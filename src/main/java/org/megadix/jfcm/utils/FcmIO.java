@@ -55,8 +55,7 @@ public class FcmIO {
             @Override
             public BaseConceptActivator build(Map<String, String> params) throws InstantiationException,
                     IllegalAccessException {
-                CauchyActivator act = (CauchyActivator) super.build(params);
-                return act;
+                return super.build(params);
             }
         };
         actBuilders.put(Constants.ConceptActivatorTypes.CAUCHY.name(), actBuilder);
@@ -166,8 +165,7 @@ public class FcmIO {
             @Override
             public BaseConceptActivator build(Map<String, String> params) throws InstantiationException,
                     IllegalAccessException {
-                HyperbolicTangentActivator act = (HyperbolicTangentActivator) super.build(params);
-                return act;
+                return super.build(params);
             }
         };
         actBuilders.put(Constants.ConceptActivatorTypes.TANH.name(), actBuilder);
@@ -203,7 +201,7 @@ public class FcmIO {
         return loadXml(new FileInputStream(filename));
     }
 
-    public static List<CognitiveMap> loadXml(InputStream inputStream) throws ParseException, FileNotFoundException {
+    public static List<CognitiveMap> loadXml(InputStream inputStream) throws ParseException {
         return loadXml(new InputStreamReader(inputStream));
     }
 
@@ -245,9 +243,8 @@ public class FcmIO {
             Schema schema = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema").newSchema(schemaSource);
             documentBuilderFactory.setAttribute(JAXP_SCHEMA_SOURCE, schema);
         }
-        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 
-        return documentBuilder;
+        return documentBuilderFactory.newDocumentBuilder();
     }
 
     private static CognitiveMap parseMap(XPath xpath, Element mapElem) throws Exception {
@@ -402,7 +399,7 @@ public class FcmIO {
 
 abstract class BaseConceptActivatorBuilder {
 
-    Class<? extends BaseConceptActivator> clazz;
+    private final Class<? extends BaseConceptActivator> clazz;
 
     public BaseConceptActivatorBuilder(Class<? extends BaseConceptActivator> clazz) {
         super();

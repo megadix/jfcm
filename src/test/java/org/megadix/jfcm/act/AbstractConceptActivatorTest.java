@@ -35,7 +35,7 @@ public abstract class AbstractConceptActivatorTest {
         c.setInput(input);
 
         double result = act.calculateNextOutputImpl(c);
-        assertEquals(expected.doubleValue(), result, 0.0001);
+        assertEquals(expected, result, 0.0001);
     }
 
     protected void checkValues(double[] input, Double prevOutput, double[] expected, BaseConceptActivator act) {

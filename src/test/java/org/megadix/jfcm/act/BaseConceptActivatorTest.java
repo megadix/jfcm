@@ -135,12 +135,12 @@ public class BaseConceptActivatorTest {
         // Test: c1 output = null
         c1.setOutput(null);
         c3.startUpdate();
-        assertEquals(1.0, c3.getNextOutput().doubleValue(), 0.0);
+        assertEquals(1.0, c3.getNextOutput(), 0.0);
 
         // Test: c1 output = NaN
         c1.setOutput(Double.NaN);
         c3.startUpdate();
-        assertEquals(1.0, c3.getNextOutput().doubleValue(), 0.0);
+        assertEquals(1.0, c3.getNextOutput(), 0.0);
 
         // Test: c1 output = positive infinity
         c1.setOutput(Double.POSITIVE_INFINITY);

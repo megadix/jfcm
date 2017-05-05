@@ -35,8 +35,7 @@ public class CauchyActivator extends BaseConceptActivator {
                 : 0.0;
         double input = prevOutput + c.getInput();
 
-        double out = 1.0 / (Math.PI * (1.0 + Math.pow(input - threshold, 2)));
-        return out;
+        return 1.0 / (Math.PI * (1.0 + Math.pow(input - threshold, 2)));
     }
 
 }

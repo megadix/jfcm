@@ -26,7 +26,6 @@ public class ToXmlVisitor extends BaseVisitor {
 
     private Element xmlElemMaps;
 
-    private Element xmlElemMap;
     private Element xmlElemConcepts;
     private Element xmlElemConcept;
     private Element xmlElemConceptParams;
@@ -50,7 +49,7 @@ public class ToXmlVisitor extends BaseVisitor {
                 doc.appendChild(xmlElemMaps);
             }
 
-            xmlElemMap = doc.createElement("map");
+            Element xmlElemMap = doc.createElement("map");
             xmlElemMap.setAttribute("name", map.getName());
             appendDescription(doc, xmlElemMap, map.getDescription());
             xmlElemMaps.appendChild(xmlElemMap);
@@ -269,9 +268,8 @@ public class ToXmlVisitor extends BaseVisitor {
             Schema schema = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema").newSchema(schemaSource);
             documentBuilderFactory.setAttribute(JAXP_SCHEMA_SOURCE, schema);
         }
-        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 
-        return documentBuilder;
+        return documentBuilderFactory.newDocumentBuilder();
     }
 
     private static void appendDescription(Document doc, Element element, String description) {

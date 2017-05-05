@@ -18,9 +18,7 @@ Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 package org.megadix.jfcm.utils;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.megadix.jfcm.*;

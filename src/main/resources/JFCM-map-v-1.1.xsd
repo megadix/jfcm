@@ -7,29 +7,29 @@
             <xsd:element name="map" minOccurs="0" maxOccurs="unbounded">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+                        <xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1"/>
                         <xsd:element name="concepts" minOccurs="0" maxOccurs="1">
                             <xsd:complexType>
                                 <xsd:sequence>
                                     <xsd:element name="concept" minOccurs="0" maxOccurs="unbounded">
                                         <xsd:complexType>
                                           <xsd:sequence>
-                                            <xsd:element name="description" type="xsd:string" minOccurs="0"></xsd:element>
-                                            <xsd:element name="params" type="jfcm:ParamsType" minOccurs="0"></xsd:element>
+                                              <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+                                              <xsd:element name="params" type="jfcm:ParamsType" minOccurs="0"/>
                                           </xsd:sequence>
-                                          <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+                                            <xsd:attribute name="name" type="xsd:string" use="required"/>
                                           <xsd:attribute name="act" use="required">
                                             <xsd:simpleType>
                                               <xsd:restriction base="xsd:string">
-                                                <xsd:enumeration value="SIGNUM"></xsd:enumeration>
-                                                <xsd:enumeration value="TANH"></xsd:enumeration>
-                                                <xsd:enumeration value="SIGMOID"></xsd:enumeration>
+                                                  <xsd:enumeration value="SIGNUM"/>
+                                                  <xsd:enumeration value="TANH"/>
+                                                  <xsd:enumeration value="SIGMOID"/>
                                               </xsd:restriction>
                                             </xsd:simpleType>
                                           </xsd:attribute>
-                                          <xsd:attribute name="input" type="xsd:double" use="optional"></xsd:attribute>
-                                          <xsd:attribute name="output" type="xsd:double" use="optional"></xsd:attribute>
-                                          <xsd:attribute name="fixed" type="xsd:boolean" use="optional"></xsd:attribute>
+                                            <xsd:attribute name="input" type="xsd:double" use="optional"/>
+                                            <xsd:attribute name="output" type="xsd:double" use="optional"/>
+                                            <xsd:attribute name="fixed" type="xsd:boolean" use="optional"/>
                                         </xsd:complexType>
                                     </xsd:element>
                                 </xsd:sequence>
@@ -41,17 +41,17 @@
                                     <xsd:element name="connection" minOccurs="0" maxOccurs="unbounded">
                                         <xsd:complexType>
                                             <xsd:sequence>
-                                              <xsd:element name="description" type="xsd:string" minOccurs="0"></xsd:element>
-                                              <xsd:element name="params" type="jfcm:ParamsType" minOccurs="0"></xsd:element>
+                                                <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+                                                <xsd:element name="params" type="jfcm:ParamsType" minOccurs="0"/>
                                             </xsd:sequence>
-                                            <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
-                                            <xsd:attribute name="from" type="xsd:string" use="required"></xsd:attribute>
-                                            <xsd:attribute name="to" type="xsd:string" use="required"></xsd:attribute>
+                                            <xsd:attribute name="name" type="xsd:string" use="required"/>
+                                            <xsd:attribute name="from" type="xsd:string" use="required"/>
+                                            <xsd:attribute name="to" type="xsd:string" use="required"/>
                                             <xsd:attribute name="type" use="required">
                                                 <xsd:simpleType>
                                                     <xsd:restriction base="xsd:string">
-                                                        <xsd:enumeration value="WEIGHTED"></xsd:enumeration>
-                                                        <xsd:enumeration value="FUZZY"></xsd:enumeration>
+                                                        <xsd:enumeration value="WEIGHTED"/>
+                                                        <xsd:enumeration value="FUZZY"/>
                                                     </xsd:restriction>
                                                 </xsd:simpleType>
                                             </xsd:attribute>
@@ -61,13 +61,13 @@
                             </xsd:complexType>
                         </xsd:element>
                     </xsd:sequence>
-                    <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+                    <xsd:attribute name="name" type="xsd:string" use="required"/>
                 </xsd:complexType>
             </xsd:element>
         </xsd:sequence>
     </xsd:complexType>
 
-    <xsd:element name="maps" type="jfcm:MapsType"></xsd:element>
+    <xsd:element name="maps" type="jfcm:MapsType"/>
 
 
 
@@ -76,8 +76,8 @@
       <xsd:sequence>
         <xsd:element name="param" minOccurs="0" maxOccurs="unbounded">
           <xsd:complexType>
-            <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
-            <xsd:attribute name="value" type="xsd:string" use="required"></xsd:attribute>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="value" type="xsd:string" use="required"/>
           </xsd:complexType>
         </xsd:element>
       </xsd:sequence>

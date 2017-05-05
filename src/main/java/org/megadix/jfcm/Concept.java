@@ -38,8 +38,8 @@ public class Concept {
     protected boolean fixedOutput = false;
 
     protected CognitiveMap map;
-    protected Set<FcmConnection> outConnections = new HashSet<>();
-    protected Set<FcmConnection> inConnections = new HashSet<>();
+    protected final Set<FcmConnection> outConnections = new HashSet<>();
+    protected final Set<FcmConnection> inConnections = new HashSet<>();
 
     public Concept() {
     }

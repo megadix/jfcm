@@ -53,8 +53,7 @@ public class GaussianActivator extends BaseConceptActivator {
         double prevOutput = (includePreviousOutput && c.getOutput() != null && !c.getOutput().isNaN()) ? c.getOutput()
                 : 0.0;
         double input = prevOutput + c.getInput();
-        double out = Math.exp(-1.0 * Math.pow((input), 2.0) / 2.0 * width2);
-        return out;
+        return Math.exp(-1.0 * Math.pow((input), 2.0) / 2.0 * width2);
     }
 
 }

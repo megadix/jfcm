@@ -56,8 +56,7 @@ public class SigmoidActivator extends BaseConceptActivator {
         double prevOutput = (includePreviousOutput && c.getOutput() != null && !c.getOutput().isNaN()) ? c.getOutput()
                 : 0.0;
         double input = prevOutput + c.getInput() + threshold;
-        double out = 1.0 / (1.0 + Math.exp(-k * input));
-        return out;
+        return 1.0 / (1.0 + Math.exp(-k * input));
     }
 
     public double getK() {

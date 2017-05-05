@@ -32,8 +32,8 @@ public class ConceptTest {
         assertEquals("name", c.getName());
         assertEquals("desc", c.getDescription());
         assertTrue(c.getConceptActivator() instanceof SignumActivator);
-        assertEquals(1.0, c.getInput().doubleValue(), 0.0);
-        assertEquals(2.0, c.getOutput().doubleValue(), 0.0);
+        assertEquals(1.0, c.getInput(), 0.0);
+        assertEquals(2.0, c.getOutput(), 0.0);
         assertTrue(c.isFixedOutput());
     }
 
@@ -56,11 +56,11 @@ public class ConceptTest {
         assertEquals("name", c2.getName());
         assertEquals("description", c2.getDescription());
         assertSame(act, c2.getConceptActivator());
-        assertEquals(-666.0, c2.getInput().doubleValue(), 0.0);
+        assertEquals(-666.0, c2.getInput(), 0.0);
         assertTrue(c2.isFixedOutput());
-        assertEquals(1.1, c2.getOutput().doubleValue(), 0.0);
-        assertEquals(2.2, c2.getNextOutput().doubleValue(), 0.0);
-        assertEquals(3.3, c2.getPrevOutput().doubleValue(), 0.0);
+        assertEquals(1.1, c2.getOutput(), 0.0);
+        assertEquals(2.2, c2.getNextOutput(), 0.0);
+        assertEquals(3.3, c2.getPrevOutput(), 0.0);
     }
 
     @Test
@@ -91,15 +91,15 @@ public class ConceptTest {
 
         c2.startUpdate();
 
-        assertEquals(1.0, c1.getOutput().doubleValue(), 0.0);
-        assertEquals(1.0, c2.getNextOutput().doubleValue(), 0.0);
+        assertEquals(1.0, c1.getOutput(), 0.0);
+        assertEquals(1.0, c2.getNextOutput(), 0.0);
         assertNull(c2.getOutput());
 
         c2.commitUpdate();
 
-        assertEquals(1.0, c1.getOutput().doubleValue(), 0.0);
-        assertEquals(1.0, c2.getNextOutput().doubleValue(), 0.0);
-        assertEquals(1.0, c2.getOutput().doubleValue(), 0.0);
+        assertEquals(1.0, c1.getOutput(), 0.0);
+        assertEquals(1.0, c2.getNextOutput(), 0.0);
+        assertEquals(1.0, c2.getOutput(), 0.0);
 
         // check retroaction
         c1.setOutput(null);
@@ -108,8 +108,8 @@ public class ConceptTest {
         assertNull(c1.getOutput());
 
         c1.commitUpdate();
-        assertEquals(1.0, c1.getOutput().doubleValue(), 0.0);
-        assertEquals(1.0, c2.getOutput().doubleValue(), 0.0);
+        assertEquals(1.0, c1.getOutput(), 0.0);
+        assertEquals(1.0, c2.getOutput(), 0.0);
     }
 
     @Test
@@ -125,12 +125,12 @@ public class ConceptTest {
         conn_2_1.connectOutputTo(c1);
 
         c2.startUpdate();
-        assertEquals(1.1, c2.getNextOutput().doubleValue(), 0.0);
-        assertEquals(1.1, c2.getOutput().doubleValue(), 0.0);
+        assertEquals(1.1, c2.getNextOutput(), 0.0);
+        assertEquals(1.1, c2.getOutput(), 0.0);
 
         c2.commitUpdate();
-        assertEquals(1.1, c2.getNextOutput().doubleValue(), 0.0);
-        assertEquals(1.1, c2.getOutput().doubleValue(), 0.0);
+        assertEquals(1.1, c2.getNextOutput(), 0.0);
+        assertEquals(1.1, c2.getOutput(), 0.0);
     }
 
     @Test
@@ -144,14 +144,14 @@ public class ConceptTest {
         c2.startUpdate();
         c2.commitUpdate();
 
-        assertEquals(0.0, c2.getOutput().doubleValue(), 0.0);
-        assertEquals(1.0, c2.getPrevOutput().doubleValue(), 0.0);
+        assertEquals(0.0, c2.getOutput(), 0.0);
+        assertEquals(1.0, c2.getPrevOutput(), 0.0);
 
         c2.startUpdate();
         c2.commitUpdate();
 
-        assertEquals(-1.0, c2.getOutput().doubleValue(), 0.0);
-        assertEquals(0.0, c2.getPrevOutput().doubleValue(), 0.0);
+        assertEquals(-1.0, c2.getOutput(), 0.0);
+        assertEquals(0.0, c2.getPrevOutput(), 0.0);
 
     }
 

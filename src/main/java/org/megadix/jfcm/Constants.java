@@ -23,7 +23,7 @@ public class Constants {
     /**
      * Pre-defined {@link ConceptActivator} implementations
      */
-    public static enum ConceptActivatorTypes {
+    public enum ConceptActivatorTypes {
         CAUCHY,
         GAUSS,
         INTERVAL,

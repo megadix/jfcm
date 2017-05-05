@@ -278,7 +278,7 @@ public class CognitiveMapTest {
             assertNull(c.getPrevOutput());
         }
 
-        assertEquals(666.0, map.getConcept("c1").getOutput().doubleValue(), 0.0);
+        assertEquals(666.0, map.getConcept("c1").getOutput(), 0.0);
     }
 
     @Test
@@ -316,7 +316,7 @@ public class CognitiveMapTest {
         map.execute();
 
         delta = map.calculateAverageSquareDelta();
-        assertEquals(0.25, delta.doubleValue(), 0.0);
+        assertEquals(0.25, delta, 0.0);
     }
 
     @Test
@@ -326,7 +326,7 @@ public class CognitiveMapTest {
 
         Concept c1 = map.getConcept("c1");
         assertTrue(c1.isFixedOutput());
-        assertEquals(1.23, c1.getOutput().doubleValue(), 0.0);
+        assertEquals(1.23, c1.getOutput(), 0.0);
     }
 
     @Test
