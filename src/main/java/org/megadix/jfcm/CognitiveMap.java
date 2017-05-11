@@ -235,7 +235,6 @@ public class CognitiveMap implements Cloneable {
             Concept c = iter.next();
             if (!c.isFixedOutput()) {
                 c.setOutput(null);
-                c.setFixedOutput(false);
             }
             c.setPrevOutput(null);
         }

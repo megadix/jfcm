@@ -1,6 +1,6 @@
-# JFCM Java Fuzzy Cognitive Maps
+JFCM Java Fuzzy Cognitive Maps
 
-## About the project
+# About the project
 
 JFCM is a Java implementation of Fuzzy Cognitive Maps. It's LGPL licence, so you
 can use it in any type of project (open and closed source) but modifications to
@@ -19,14 +19,28 @@ You can find more about me on my website:
 
 http://www.megadix.it/
 
-## CHANGELOG
+# Developer Guide
 
-### Release 1.4.3
+Build & install:
+
+```
+mvn install
+```
+
+Install sources locally:
+
+```
+mvn source:jar install
+```
+
+# CHANGELOG
+
+## Release 1.4.3
 
 * moved JDK compatibility to 1.7
 * cosmetic fixes to source code, no functionality affected
 
-### Release 1.4.2
+## Release 1.4.2
 
 * fixed XSD:
   * moved CAUCHY, GAUSS, INTERVAL, LINEAR, NARY activator enum to JFCM-map-v-1.2.xsd
@@ -36,12 +50,12 @@ http://www.megadix.it/
   * added CSV output functionality to SimpleFcmRunner
 * changed format of README from Textile to Markdown
 
-### Release 1.4.1
+## Release 1.4.1
 
 * fixed bug in FcmIO.saveAsXml(): wrong schema version in XML output, uses 1.1 but should be 1.2
 * Refactored FcmIO.saveAsXml() to ToXmlVisitor.java
 
-### Release: 1.4.0
+## Release: 1.4.0
 
 * moved ConceptActivator and FcmConncetion implementations in sub-packages:
   * org.megadix.jfcm.act : ConceptActivator implementations;
@@ -53,7 +67,7 @@ http://www.megadix.it/
   * added project.build.sourceEncoding property;
   * added version to plugins, so Maven doesn't complain about it :)
 
-### Release 1.3.3
+## Release 1.3.3
 
 * CognitiveMap.reset(): do not set output or fixedOutput if fixedOutput == true
 * Concept.startUpdate(): bugfix if conceptActivator == null;
@@ -74,7 +88,7 @@ http://www.megadix.it/
   * Concept.setFixedOutput(): changed Boolean (Object, may be null) to boolean (native, never null)
 * better toString() methods: CognitiveMap, Concept, WeightedConnection;
 
-### Release 1.3.2
+## Release 1.3.2
 
 * bugfix to BaseConceptActivator.calculateNextOutput() on null or NaN inputs;
 * SignumActivator:
@@ -86,12 +100,12 @@ http://www.megadix.it/
 * BaseConceptActivator: check threshold parameter;
 * simpler and easier tests for concept activators.
 
-### Release 1.3.1
+## Release 1.3.1
 
 * FcmIO: added support for "includePreviousOutput" as concept parameter;
 * tests enhancements
 
-### Release 1.3
+## Release 1.3
 
 * BaseConceptActivator.includePreviousOutput;
 * change in output calculations: HyperbolicTangentActivator, LinearActivator,
@@ -99,7 +113,7 @@ SigmoidActivator, SignumActivator include by default (includePreviousOutput =
 true) previous output in calculations;
 * Remove Jakarta Commons dependency, added StringUtils as substitute.
 
-### Release 1.2
+## Release 1.2
 
 * map.execute() should really have two phases
 * Add method CognitiveMap.reset() that resets every Concept to null
@@ -108,7 +122,7 @@ true) previous output in calculations;
 * Backport LinearConceptActivator from 2.0-SNAPSHOT
 * Backport time delay to WeightedConnection from 2.0-SNAPSHOT
 
-### Release 1.1.0
+## Release 1.1.0
 
 * moved threshold to BaseConceptActivator;
 * bugfix: threshold was not used in transfer functions!
